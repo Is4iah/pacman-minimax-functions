@@ -4,7 +4,7 @@
 # educational purposes provided that (1) you do not distribute or publish
 # solutions, (2) you retain this notice, and (3) you provide clear
 # attribution to UC Berkeley, including a link to http://ai.berkeley.edu.
-# 
+#
 # Attribution Information: The Pacman AI projects were developed at UC Berkeley.
 # The core projects and autograders were primarily created by John DeNero
 # (denero@cs.berkeley.edu) and Dan Klein (klein@cs.berkeley.edu).
@@ -108,7 +108,7 @@ class MultiAgentSearchAgent(Agent):
 
 class MinimaxAgent(MultiAgentSearchAgent):
     """
-    Your minimax agent (question 2
+    Your minimax agent (question 2)
     """
 
     def getAction(self, gameState):
@@ -134,41 +134,8 @@ class MinimaxAgent(MultiAgentSearchAgent):
         gameState.isLose():
         Returns whether or not the game state is a losing state
         """
-        "****** psuedo code ****************************************************************"
-
-        # def max-values(states)
-        #     initialize v = -infinity
-        #     for each succ of state:
-        #         v = max(v, min-value(succ))
-        #     return v
-        #
-        #
-        # def max-values(states)
-        #     initialize v = + INFINITY
-        #     for each succ of state:
-        #         v = max(v, max-value(succ))
-        #     return v
-        "*** psuedocode *********************************************************************"
-
-        # Collect legal moves and child states
-        legalMoves = gameState.getLegalActions()
-
-        # Choose one of the best actions
-        scores = [self.evaluationFunction(gameState, action) for action in legalMoves]
-        # gets all the possible scores given the action
-        # it seems like this is the one that will have to be changed. We need to consider the ghost making
-        # rational decisions
-
-        bestScore = max(scores)
-        #we still choose the best score
-
-        bestIndices = [index for index in range(len(scores)) if scores[index] == bestScore]
-
-        chosenIndex = random.choice(bestIndices)  # Pick randomly among the best
-
-        "Add more of your code here if you want to"
-
-        return legalMoves[chosenIndex]
+        "*** YOUR CODE HERE ***"
+        util.raiseNotDefined()
 
 
 
