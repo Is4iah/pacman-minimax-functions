@@ -135,43 +135,7 @@ class MinimaxAgent(MultiAgentSearchAgent):
         Returns whether or not the game state is a losing state
         """
         "*** YOUR CODE HERE ***"
-
-        v = -float('inf')
-        vAction = ""
-
-        for action in gameState.getLegalActions(0):
-            newGameState = gameState.getNextState(0, action)
-            valueHolder = self.minVal(newGameState, 1, 0)
-            if valueHolder > v:
-                v = valueHolder
-                vAction = action
-
-        return vAction
-
-    def maxVal(self, gameState, depth):
-        if self.depth == depth or gameState.isWin() or gameState.isLose():
-            return self.evaluationFunction(gameState)
-
-        v = -float('inf')
-        for action in gameState.getLegalActions(0):
-            newGameState = gameState.getNextState(0, action)
-            v = max(v, self.minVal(newGameState, 1, depth))
-
-        return v
-
-    def minVal(self, gameState, agentIndex, depth):
-        if self.depth == depth or gameState.isWin() or gameState.isLose():
-            return self.evaluationFunction(gameState)
-
-        v = float('inf')
-        for action in gameState.getLegalActions(agentIndex):
-            newGameState = gameState.getNextState(agentIndex, action)
-            if agentIndex == gameState.getNumGhost():
-                v = min(v, self.maxVal(newGameState, depth + 1))
-            else:
-                v = min(v, self.minVal(newGameState, agentIndex + 1, depth))
-
-        return v
+        util.raiseNotDefined()
 
 
 
@@ -185,6 +149,7 @@ class AlphaBetaAgent(MultiAgentSearchAgent):
         Returns the minimax action using self.depth and self.evaluationFunction
         """
         "*** YOUR CODE HERE ***"
+<<<<<<< HEAD
         # this is pacmans next legal acitons
         legal = gameState.getLegalActions(0)
 
@@ -222,6 +187,9 @@ class AlphaBetaAgent(MultiAgentSearchAgent):
             beta = x
         return x
 
+=======
+        util.raiseNotDefined()
+>>>>>>> parent of a08e45e (Merge branch 'main' of https://github.com/Is4iah/pacman-minimax-functions)
 
 
 class ExpectimaxAgent(MultiAgentSearchAgent):
