@@ -149,6 +149,7 @@ class AlphaBetaAgent(MultiAgentSearchAgent):
         Returns the minimax action using self.depth and self.evaluationFunction
         """
         "*** YOUR CODE HERE ***"
+<<<<<<< HEAD
 
         # this is pacmans next legal acitons
         legal = gameState.getLegalActions(0)
@@ -160,22 +161,33 @@ class AlphaBetaAgent(MultiAgentSearchAgent):
         successors = []
         alpha = -999999999
         beta = 999999999
+=======
+        v = -float('inf')
+        vAction = ""
+        a = -float('inf')
+        b = float('inf')
+>>>>>>> parent of 8c8c697 (Revert "q1,2,3 finished")
 
-        for action in legal:
-            successors.append((gameState.getNextState(0, action), alpha, beta))
-        maxValue = -float('inf')
-        goalIndex = 0
+        if self.depth == 0 or gameState.isWin() or gameState.isLose():
+            return self.evaluationFunction(gameState)
 
+        for action in gameState.getLegalActions(0):
+            newGameState = gameState.getNextState(0, action)
+            valueHolder = self.minVal(newGameState, 1, 0, a, b)
+            if valueHolder > v:
+                v = valueHolder
+                vAction = action
+            if v > b:
+                return vAction
+            a = max(a, v)
 
-        # loops through the possible successors and returns the value of the successors given the action
-        for x in range(len(successors)):
-            actionValue = self.value(successors[x], 1, 0)
-            if actionValue > maxValue:
-                maxValue = actionValue
-                goalIndex = x
+        return vAction
 
-        return legal[goalIndex]
+    def maxVal(self, gameState, depth, a, b): #b is being updated
+        if self.depth == depth or gameState.isWin() or gameState.isLose():
+            return self.evaluationFunction(gameState)
 
+<<<<<<< HEAD
         # get maxs
 
         def MAXvalue(self, gameState, agentIndex, depthSoFar):
@@ -186,6 +198,32 @@ class AlphaBetaAgent(MultiAgentSearchAgent):
                 x = max(x, self.value(successor, 1, depthSoFar))
                 beta = x
             return x
+=======
+        v = -float('inf')
+        for action in gameState.getLegalActions(0):
+            newGameState = gameState.getNextState(0, action)
+            v = max(v, self.minVal(newGameState, 1, depth, a, b))
+            if v > b:
+                return v
+            a = max(a, v)
+        return v
+
+    def minVal(self, gameState, agentIndex, depth, a, b):
+        if self.depth == depth or gameState.isWin() or gameState.isLose():
+            return self.evaluationFunction(gameState)
+
+        v = float('inf')
+        for action in gameState.getLegalActions(agentIndex):
+            newGameState = gameState.getNextState(agentIndex, action)
+            if agentIndex == gameState.getNumGhost():
+                v = min(v, self.maxVal(newGameState, depth + 1, a, b))
+            else:
+                v = min(v, self.minVal(newGameState, agentIndex + 1, depth, a, b))
+            if v < a:
+                return v
+            b = min(b, v)
+        return v
+>>>>>>> parent of 8c8c697 (Revert "q1,2,3 finished")
 
 
 class ExpectimaxAgent(MultiAgentSearchAgent):
@@ -201,7 +239,43 @@ class ExpectimaxAgent(MultiAgentSearchAgent):
         legal moves.
         """
         "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
+        v = -float('inf')
+        vAction = ""
+
+        for action in gameState.getLegalActions(0):
+            newGameState = gameState.getNextState(0, action)
+            valueHolder = self.avgVal(newGameState, 1, 0)
+            if valueHolder > v:
+                v = valueHolder
+                vAction = action
+
+        return vAction
+
+    def maxVal(self, gameState, depth):
+        if self.depth == depth or gameState.isWin() or gameState.isLose():
+            return self.evaluationFunction(gameState)
+
+        v = -float('inf')
+        for action in gameState.getLegalActions(0):
+            newGameState = gameState.getNextState(0, action)
+            v = max(v, self.avgVal(newGameState, 1, depth))
+        return v
+
+    def avgVal(self, gameState, agentIndex, depth):
+
+        if self.depth == depth or gameState.isWin() or gameState.isLose():
+            return self.evaluationFunction(gameState)
+
+        if agentIndex > gameState.getNumGhost():
+            return self.maxVal(gameState, depth + 1)
+
+        v = 0
+
+        for action in gameState.getLegalActions(agentIndex):
+            newGameState = gameState.getNextState(agentIndex, action)
+            v += self.avgVal(newGameState, agentIndex + 1, depth)
+
+        return v/len(gameState.getLegalActions(agentIndex))
 
 
 
