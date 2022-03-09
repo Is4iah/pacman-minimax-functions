@@ -149,9 +149,7 @@ class AlphaBetaAgent(MultiAgentSearchAgent):
         Returns the minimax action using self.depth and self.evaluationFunction
         """
         "*** YOUR CODE HERE ***"
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
+
         # this is pacmans next legal acitons
         legal = gameState.getLegalActions(0)
 
@@ -188,16 +186,6 @@ class AlphaBetaAgent(MultiAgentSearchAgent):
             x = max(x, self.value(successor, 1, depthSoFar))
             beta = x
         return x
-
-=======
-        util.raiseNotDefined()
->>>>>>> parent of a08e45e (Merge branch 'main' of https://github.com/Is4iah/pacman-minimax-functions)
-=======
-        util.raiseNotDefined()
->>>>>>> parent of a08e45e (Merge branch 'main' of https://github.com/Is4iah/pacman-minimax-functions)
-=======
-        util.raiseNotDefined()
->>>>>>> parent of a08e45e (Merge branch 'main' of https://github.com/Is4iah/pacman-minimax-functions)
 
 
 class ExpectimaxAgent(MultiAgentSearchAgent):
