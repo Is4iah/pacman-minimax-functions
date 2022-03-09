@@ -135,7 +135,61 @@ class MinimaxAgent(MultiAgentSearchAgent):
         Returns whether or not the game state is a losing state
         """
         "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
+        #this is pacmans next legal acitons
+        legal = gameState.getLegalActions(0)
+
+        #this gets the successors for pacman (0) given the valid actions that pacman can take
+        successors = [gameState.getNextState(0, action) for action in legal]
+
+        #this will hold the max value and goal index
+        maxValue = -float('inf')
+
+        # we want to return the action that corresponds to the best move
+        # so we will hold the index of the highest value in highestValIndex
+        highestValIndex = 0
+
+        # loops through the possible successors (through their length) and returns the index of the maxValue
+        # keep in mind that you will be looking at the actions of all of the ghost now (so (..., 
+        for x in range(len(successors)):
+            actionValue = self.value(successors[x], 1, 0)
+            if actionValue > maxValue:
+                maxValue = actionValue
+                goalIndex = x
+
+        return legal[goalIndex]
+
+    # get max
+    def MAXvalue(self, gameState, agentIndex, depthSoFar):
+        legal = gameState.getLegalActions(agentIndex)
+        successors = [gameState.getNextState(agentIndex, action) for action in legal]
+        x = -float('inf')
+        for successor in successors:
+            x = max(x, self.value(successor, 1, depthSoFar))
+        return x
+
+    # get min
+    def MINvalue(self, gameState, agentIndex, depthSoFar):
+        legal = gameState.getLegalActions(agentIndex)
+        successors = [gameState.getNextState(agentIndex, action) for action in legal]
+        x = float('inf')
+        for successor in successors:
+            if agentIndex + 1 == gameState.getNumGhost() + 1:
+                x = min(x, self.value(successor, 0, depthSoFar + 1))
+            else:
+                x = min(x, self.value(successor, agentIndex + 1, depthSoFar))
+        return x
+
+    def value(self, gameState, agentIndex, depthSoFar):
+
+        "If requisite no. of searches complete, evaluation function"
+        if depthSoFar == self.depth or gameState.isWin() or gameState.isLose():
+            return self.evaluationFunction(gameState)
+        "If agentIndex is 0, perform MAX"
+        if agentIndex == 0:
+            return self.MAXvalue(gameState, agentIndex, depthSoFar)
+        "Else (if agentindex > 0), perform MIN"
+        if agentIndex > 0:
+            return self.MINvalue(gameState, agentIndex, depthSoFar)
 
 
 
@@ -149,7 +203,43 @@ class AlphaBetaAgent(MultiAgentSearchAgent):
         Returns the minimax action using self.depth and self.evaluationFunction
         """
         "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
+        # this is pacmans next legal acitons
+        legal = gameState.getLegalActions(0)
+
+        # this gets the successors for pacman (0) given the valid actions that pacman can take
+        # i think i can rewrite this equation
+        # successors = [gameState.getNextState(0, action) for action in legal]
+
+        successors = []
+        alpha = -999999999
+        beta = 999999999
+
+        for action in legal:
+            successors.append((gameState.getNextState(0, action), alpha, beta))
+        maxValue = -float('inf')
+        goalIndex = 0
+
+
+        # loops through the possible successors and returns the value of the successors given the action
+        for x in range(len(successors)):
+            actionValue = self.value(successors[x], 1, 0)
+            if actionValue > maxValue:
+                maxValue = actionValue
+                goalIndex = x
+
+        return legal[goalIndex]
+
+        # get max
+
+    def MAXvalue(self, gameState, agentIndex, depthSoFar):
+        legal = gameState[0].getLegalActions(agentIndex)
+        successors = [((gameState[0].getNextState(0, action), alpha, beta)) for action in legal]
+        x = -float('inf')
+        for successor in successors:
+            x = max(x, self.value(successor, 1, depthSoFar))
+            beta = x
+        return x
+
 
 
 class ExpectimaxAgent(MultiAgentSearchAgent):
