@@ -176,16 +176,16 @@ class AlphaBetaAgent(MultiAgentSearchAgent):
 
         return legal[goalIndex]
 
-        # get max
+        # get maxs
 
-    def MAXvalue(self, gameState, agentIndex, depthSoFar):
-        legal = gameState[0].getLegalActions(agentIndex)
-        successors = [((gameState[0].getNextState(0, action), alpha, beta)) for action in legal]
-        x = -float('inf')
-        for successor in successors:
-            x = max(x, self.value(successor, 1, depthSoFar))
-            beta = x
-        return x
+        def MAXvalue(self, gameState, agentIndex, depthSoFar):
+            legal = gameState[0].getLegalActions(agentIndex)
+            successors = [((gameState[0].getNextState(0, action), alpha, beta)) for action in legal]
+            x = -float('inf')
+            for successor in successors:
+                x = max(x, self.value(successor, 1, depthSoFar))
+                beta = x
+            return x
 
 
 class ExpectimaxAgent(MultiAgentSearchAgent):
