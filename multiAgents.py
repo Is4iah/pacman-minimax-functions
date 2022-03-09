@@ -151,6 +151,7 @@ class AlphaBetaAgent(MultiAgentSearchAgent):
         "*** YOUR CODE HERE ***"
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         # this is pacmans next legal acitons
         legal = gameState.getLegalActions(0)
 
@@ -188,6 +189,9 @@ class AlphaBetaAgent(MultiAgentSearchAgent):
             beta = x
         return x
 
+=======
+        util.raiseNotDefined()
+>>>>>>> parent of a08e45e (Merge branch 'main' of https://github.com/Is4iah/pacman-minimax-functions)
 =======
         util.raiseNotDefined()
 >>>>>>> parent of a08e45e (Merge branch 'main' of https://github.com/Is4iah/pacman-minimax-functions)
